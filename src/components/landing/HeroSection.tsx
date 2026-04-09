@@ -11,11 +11,18 @@ interface HeroSectionProps {
   directOffers?: DirectOffer[];
 }
 
+interface MarqueeItem {
+  image: string;
+  title: string;
+  sub: string;
+  flag?: string;
+}
+
 const FLAG_URL = (code: string) =>
   `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
 
 const HeroSection = ({ title, subtitle, ctaText, onCtaClick, offers = [], directOffers = [] }: HeroSectionProps) => {
-  const allItems = [
+  const allItems: MarqueeItem[] = [
     ...offers.map((o) => ({ image: o.image, title: o.title, sub: o.description })),
     ...directOffers.map((o) => ({ image: o.image, title: o.title, sub: o.country, flag: o.countryCode })),
   ];
