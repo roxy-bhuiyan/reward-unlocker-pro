@@ -15,11 +15,15 @@ export interface Offer {
   enabled: boolean;
 }
 
+export type LockerType = "script" | "link";
+
 export interface SiteSettings {
   heroTitle: string;
   heroSubtitle: string;
   ctaText: string;
+  lockerType: LockerType;
   lockerScript: string;
+  lockerLink: string;
   notifications: string[];
 }
 
@@ -37,7 +41,9 @@ const DEFAULT_SETTINGS: SiteSettings = {
   heroTitle: "Unlock Premium Rewards Instantly",
   heroSubtitle: "Complete a quick step to access your reward",
   ctaText: "Unlock Now",
+  lockerType: "script",
   lockerScript: "",
+  lockerLink: "",
   notifications: [
     "John from USA just unlocked Xbox reward",
     "Sarah from UK claimed Netflix subscription",
