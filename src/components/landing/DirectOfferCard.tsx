@@ -1,4 +1,4 @@
-import type { DirectOffer } from "@/lib/store";
+import { trackClick, type DirectOffer } from "@/lib/store";
 
 const FLAG_URL = (code: string) =>
   `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
@@ -13,6 +13,7 @@ const DirectOfferCard = ({ offer }: DirectOfferCardProps) => {
       href={offer.offerUrl}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackClick(offer.id, offer.title)}
       className="group bg-card rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-border block"
     >
       {offer.image && (
