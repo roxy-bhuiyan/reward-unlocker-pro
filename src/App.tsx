@@ -10,6 +10,7 @@ import DashboardOverview from "./pages/admin/DashboardOverview";
 import ManageOffers from "./pages/admin/ManageOffers";
 import LockerSettings from "./pages/admin/LockerSettings";
 import SiteSettingsPage from "./pages/admin/SiteSettingsPage";
+import ClickAnalytics from "./pages/admin/ClickAnalytics";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route element={<AdminLayout />}>
             <Route path="/admin/dashboard" element={<DashboardOverview />} />
             <Route path="/admin/offers" element={<ManageOffers />} />
+            <Route path="/admin/analytics" element={<ClickAnalytics />} />
             <Route path="/admin/locker" element={<LockerSettings />} />
             <Route path="/admin/settings" element={<SiteSettingsPage />} />
           </Route>

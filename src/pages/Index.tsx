@@ -5,7 +5,7 @@ import OfferCard from "@/components/landing/OfferCard";
 import ProgressSteps from "@/components/landing/ProgressSteps";
 import SocialProof from "@/components/landing/SocialProof";
 import ContentLocker from "@/components/landing/ContentLocker";
-import { getOffers, getSettings, type Offer } from "@/lib/store";
+import { getOffers, getSettings, trackClick, type Offer } from "@/lib/store";
 import { Settings } from "lucide-react";
 
 const Index = () => {
@@ -21,6 +21,11 @@ const Index = () => {
 
   const scrollToOffers = () => {
     offersRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleGetNow = (offer: Offer) => {
+    trackClick(offer.id, offer.title);
+    setSelectedOffer(offer);
   };
 
   return (
@@ -44,7 +49,7 @@ const Index = () => {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {offers.map((offer) => (
-              <OfferCard key={offer.id} offer={offer} onGetNow={setSelectedOffer} />
+              <OfferCard key={offer.id} offer={offer} onGetNow={handleGetNow} />
             ))}
           </div>
         </div>

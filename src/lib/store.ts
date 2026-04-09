@@ -86,3 +86,26 @@ export function adminLogin(password: string): boolean {
 export function adminLogout() {
   sessionStorage.removeItem("admin_auth");
 }
+
+// --- Click Analytics ---
+
+export interface ClickEvent {
+  offerId: string;
+  offerTitle: string;
+  timestamp: number;
+}
+
+export function trackClick(offerId: string, offerTitle: string) {
+  const clicks = getClicks();
+  clicks.push({ offerId, offerTitle, timestamp: Date.now() });
+  localStorage.setItem("cpa_clicks", JSON.stringify(clicks));
+}
+
+export function getClicks(): ClickEvent[] {
+  const stored = localStorage.getItem("cpa_clicks");
+  return stored ? JSON.parse(stored) : [];
+}
+
+export function clearClicks() {
+  localStorage.removeItem("cpa_clicks");
+}
