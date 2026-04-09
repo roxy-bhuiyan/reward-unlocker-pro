@@ -19,7 +19,7 @@ const ClickAnalytics = () => {
         existing.count++;
         existing.lastClick = Math.max(existing.lastClick, c.timestamp);
       } else {
-        map.set(c.offerId, { title: c.offerTitle, count: c.count || 1, lastClick: c.timestamp });
+        map.set(c.offerId, { title: c.offerTitle, count: 1, lastClick: c.timestamp });
       }
     });
     return Array.from(map.values()).sort((a, b) => b.count - a.count);
