@@ -1,16 +1,19 @@
-import { getOffers, getSettings } from "@/lib/store";
-import { Gift, Eye, Bell, Settings } from "lucide-react";
+import { getOffers, getSettings, getClicks } from "@/lib/store";
+import { Gift, Eye, Bell, Settings, MousePointerClick } from "lucide-react";
 
 const DashboardOverview = () => {
   const offers = getOffers();
   const settings = getSettings();
   const active = offers.filter((o) => o.enabled).length;
 
+  const clicks = getClicks();
+
   const stats = [
     { label: "Total Offers", value: offers.length, icon: Gift, color: "gradient-primary" },
     { label: "Active Offers", value: active, icon: Eye, color: "gradient-accent" },
-    { label: "Notifications", value: settings.notifications.length, icon: Bell, color: "gradient-primary" },
-    { label: "Locker Status", value: settings.lockerScript ? "Active" : "Not Set", icon: Settings, color: "gradient-accent" },
+    { label: "Total Clicks", value: clicks.length, icon: MousePointerClick, color: "gradient-primary" },
+    { label: "Notifications", value: settings.notifications.length, icon: Bell, color: "gradient-accent" },
+    { label: "Locker Status", value: settings.lockerScript ? "Active" : "Not Set", icon: Settings, color: "gradient-primary" },
   ];
 
   return (
