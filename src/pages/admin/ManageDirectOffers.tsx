@@ -76,7 +76,13 @@ const ManageDirectOffers = () => {
           <h2 className="font-semibold text-card-foreground mb-4">{editing.title ? "Edit Offer" : "New Offer"}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <Input placeholder="Title" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
-            <Input placeholder="Image URL" value={editing.image} onChange={(e) => setEditing({ ...editing, image: e.target.value })} />
+            <div className="flex gap-2 items-center">
+              <Input placeholder="Image URL" value={editing.image} onChange={(e) => setEditing({ ...editing, image: e.target.value })} className="flex-1" />
+              <input type="file" accept="image/*" ref={fileInputRef} onChange={handleImageUpload} className="hidden" />
+              <Button type="button" variant="outline" size="icon" onClick={() => fileInputRef.current?.click()} title="Upload Image">
+                <Upload className="w-4 h-4" />
+              </Button>
+            </div>
             <Input placeholder="Description" value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} className="sm:col-span-2" />
             <Input placeholder="Offer URL" value={editing.offerUrl} onChange={(e) => setEditing({ ...editing, offerUrl: e.target.value })} className="sm:col-span-2" />
             <Input placeholder="Country (e.g. USA)" value={editing.country} onChange={(e) => setEditing({ ...editing, country: e.target.value })} />
