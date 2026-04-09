@@ -109,3 +109,36 @@ export function getClicks(): ClickEvent[] {
 export function clearClicks() {
   localStorage.removeItem("cpa_clicks");
 }
+
+// --- Direct CPA Offers ---
+
+export interface DirectOffer {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  offerUrl: string;
+  country: string;
+  countryCode: string;
+  enabled: boolean;
+}
+
+const DEFAULT_DIRECT_OFFERS: DirectOffer[] = [
+  { id: "d1", title: "DailySurge - $1,000 Coke vs Pepsi", description: "Choose your side and win $1,000!", image: "", offerUrl: "#", country: "USA", countryCode: "US", enabled: true },
+  { id: "d2", title: "GnG - 1k Amazon", description: "Win a $1,000 Amazon Gift Card!", image: "", offerUrl: "#", country: "USA", countryCode: "US", enabled: true },
+  { id: "d3", title: "PrizeZappy - Chance to Win $50K", description: "Enter for a chance to win $50,000!", image: "", offerUrl: "#", country: "USA", countryCode: "US", enabled: true },
+  { id: "d4", title: "CTConnect - PayPal $100", description: "Claim your $100 PayPal reward!", image: "", offerUrl: "#", country: "USA", countryCode: "US", enabled: true },
+  { id: "d5", title: "BlueReen - Win a Tattoo", description: "Gewinne ein gratis Tattoo!", image: "", offerUrl: "#", country: "Germany", countryCode: "DE", enabled: true },
+  { id: "d6", title: "BlueReen - Win a Specialized eBike", description: "Gewinne ein Specialized eBike!", image: "", offerUrl: "#", country: "Germany", countryCode: "DE", enabled: true },
+  { id: "d7", title: "BlueReen - Win iPhone 17 Pro", description: "Gewinne das neue iPhone 17 Pro!", image: "", offerUrl: "#", country: "Germany", countryCode: "DE", enabled: true },
+  { id: "d8", title: "RewardsFlow - Halloween SHEIN", description: "Win a SHEIN Halloween shopping spree!", image: "", offerUrl: "#", country: "Canada", countryCode: "CA", enabled: true },
+];
+
+export function getDirectOffers(): DirectOffer[] {
+  const stored = localStorage.getItem("cpa_direct_offers");
+  return stored ? JSON.parse(stored) : DEFAULT_DIRECT_OFFERS;
+}
+
+export function saveDirectOffers(offers: DirectOffer[]) {
+  localStorage.setItem("cpa_direct_offers", JSON.stringify(offers));
+}

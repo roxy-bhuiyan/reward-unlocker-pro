@@ -2,21 +2,24 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import HeroSection from "@/components/landing/HeroSection";
 import OfferCard from "@/components/landing/OfferCard";
+import DirectOfferCard from "@/components/landing/DirectOfferCard";
 import ProgressSteps from "@/components/landing/ProgressSteps";
 import SocialProof from "@/components/landing/SocialProof";
 import ContentLocker from "@/components/landing/ContentLocker";
-import { getOffers, getSettings, trackClick, type Offer } from "@/lib/store";
+import { getOffers, getSettings, getDirectOffers, trackClick, type Offer, type DirectOffer } from "@/lib/store";
 import { Settings } from "lucide-react";
 
 const Index = () => {
   const [offers, setOffers] = useState<Offer[]>([]);
   const [settings, setSettings] = useState(getSettings());
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+  const [directOffers, setDirectOffers] = useState<DirectOffer[]>([]);
   const offersRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setOffers(getOffers().filter((o) => o.enabled));
     setSettings(getSettings());
+    setDirectOffers(getDirectOffers().filter((o) => o.enabled));
   }, []);
 
   const scrollToOffers = () => {
@@ -54,6 +57,22 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Direct CPA Offers */}
+      {directOffers.length > 0 && (
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-10">
+              🔥 Exclusive CPA Offers
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {directOffers.map((offer) => (
+                <DirectOfferCard key={offer.id} offer={offer} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="border-t border-border py-6">

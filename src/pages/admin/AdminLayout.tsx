@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
 import { isAdminLoggedIn, adminLogout } from "@/lib/store";
-import { LayoutDashboard, Gift, Lock, Settings, LogOut, Home, BarChart3 } from "lucide-react";
+import { LayoutDashboard, Gift, Lock, Settings, LogOut, Home, BarChart3, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "Overview", path: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Manage Offers", path: "/admin/offers", icon: Gift },
+  { label: "Direct Offers", path: "/admin/direct-offers", icon: ExternalLink },
   { label: "Analytics", path: "/admin/analytics", icon: BarChart3 },
   { label: "Content Locker", path: "/admin/locker", icon: Lock },
   { label: "Site Settings", path: "/admin/settings", icon: Settings },
