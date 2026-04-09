@@ -1,0 +1,82 @@
+import xboxImg from "@/assets/xbox-card.jpg";
+import playstationImg from "@/assets/playstation-card.jpg";
+import netflixImg from "@/assets/netflix-card.jpg";
+import amazonImg from "@/assets/amazon-card.jpg";
+import cashappImg from "@/assets/cashapp-card.jpg";
+import googleplayImg from "@/assets/googleplay-card.jpg";
+import iphoneImg from "@/assets/iphone-card.jpg";
+
+export interface Offer {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  redirectUrl: string;
+  enabled: boolean;
+}
+
+export interface SiteSettings {
+  heroTitle: string;
+  heroSubtitle: string;
+  ctaText: string;
+  lockerScript: string;
+  notifications: string[];
+}
+
+const DEFAULT_OFFERS: Offer[] = [
+  { id: "1", title: "Xbox Gift Card", description: "Get a $50 Xbox Gift Card for free!", image: xboxImg, redirectUrl: "#", enabled: true },
+  { id: "2", title: "PlayStation Gift Card", description: "Unlock a $50 PlayStation Store credit!", image: playstationImg, redirectUrl: "#", enabled: true },
+  { id: "3", title: "Netflix Subscription", description: "Enjoy 3 months of Netflix Premium free!", image: netflixImg, redirectUrl: "#", enabled: true },
+  { id: "4", title: "Amazon Gift Card", description: "Claim your $100 Amazon Gift Card now!", image: amazonImg, redirectUrl: "#", enabled: true },
+  { id: "5", title: "Cash App Money", description: "Receive $75 directly to your Cash App!", image: cashappImg, redirectUrl: "#", enabled: true },
+  { id: "6", title: "Google Play Balance", description: "Get $25 Google Play credit instantly!", image: googleplayImg, redirectUrl: "#", enabled: true },
+  { id: "7", title: "iPhone Giveaway", description: "Win the latest iPhone — enter now!", image: iphoneImg, redirectUrl: "#", enabled: true },
+];
+
+const DEFAULT_SETTINGS: SiteSettings = {
+  heroTitle: "Unlock Premium Rewards Instantly",
+  heroSubtitle: "Complete a quick step to access your reward",
+  ctaText: "Unlock Now",
+  lockerScript: "",
+  notifications: [
+    "John from USA just unlocked Xbox reward",
+    "Sarah from UK claimed Netflix subscription",
+    "Mike from Canada got Amazon Gift Card",
+    "Emma from Australia unlocked PlayStation reward",
+    "Alex from Germany claimed Cash App money",
+  ],
+};
+
+export function getOffers(): Offer[] {
+  const stored = localStorage.getItem("cpa_offers");
+  return stored ? JSON.parse(stored) : DEFAULT_OFFERS;
+}
+
+export function saveOffers(offers: Offer[]) {
+  localStorage.setItem("cpa_offers", JSON.stringify(offers));
+}
+
+export function getSettings(): SiteSettings {
+  const stored = localStorage.getItem("cpa_settings");
+  return stored ? JSON.parse(stored) : DEFAULT_SETTINGS;
+}
+
+export function saveSettings(settings: SiteSettings) {
+  localStorage.setItem("cpa_settings", JSON.stringify(settings));
+}
+
+export function isAdminLoggedIn(): boolean {
+  return sessionStorage.getItem("admin_auth") === "true";
+}
+
+export function adminLogin(password: string): boolean {
+  if (password === "admin123") {
+    sessionStorage.setItem("admin_auth", "true");
+    return true;
+  }
+  return false;
+}
+
+export function adminLogout() {
+  sessionStorage.removeItem("admin_auth");
+}
