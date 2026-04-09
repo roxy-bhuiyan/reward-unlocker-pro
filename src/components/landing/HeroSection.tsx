@@ -1,17 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { Shield, Star, Zap } from "lucide-react";
+import { type Offer, type DirectOffer } from "@/lib/store";
 
 interface HeroSectionProps {
   title: string;
   subtitle: string;
   ctaText: string;
   onCtaClick: () => void;
+  offers?: Offer[];
+  directOffers?: DirectOffer[];
 }
 
-const HeroSection = ({ title, subtitle, ctaText, onCtaClick }: HeroSectionProps) => {
+const FLAG_URL = (code: string) =>
+  `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
+
+const HeroSection = ({ title, subtitle, ctaText, onCtaClick, offers = [], directOffers = [] }: HeroSectionProps) => {
+  const allItems = [
+    ...offers.map((o) => ({ image: o.image, title: o.title, sub: o.description })),
+    ...directOffers.map((o) => ({ image: o.image, title: o.title, sub: o.country, flag: o.countryCode })),
+  ];
+
+  const marqueeItems = allItems.length > 0 ? [...allItems, ...allItems] : [];
+
   return (
-    <section className="gradient-hero relative overflow-hidden min-h-[70vh] flex items-center">
-      {/* Floating orbs */}
+    <section className="gradient-hero relative overflow-hidden min-h-[70vh] flex flex-col items-center justify-center">
       <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-primary/20 blur-3xl animate-pulse-slow" />
       <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-secondary/20 blur-3xl animate-pulse-slow" />
 
@@ -46,6 +58,34 @@ const HeroSection = ({ title, subtitle, ctaText, onCtaClick }: HeroSectionProps)
           </div>
         </div>
       </div>
+
+      {marqueeItems.length > 0 && (
+        <div className="w-full relative z-10 pb-8 overflow-hidden">
+          <div className="flex animate-marquee gap-4 w-max">
+            {marqueeItems.map((item, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-48 glass-card rounded-xl p-3 flex flex-col items-center gap-2 hover:scale-105 transition-transform duration-300"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-24 object-cover rounded-lg"
+                />
+                <p className="text-xs font-bold text-primary-foreground truncate w-full text-center">
+                  {item.title}
+                </p>
+                <p className="text-[10px] text-primary-foreground/60 truncate w-full text-center flex items-center justify-center gap-1">
+                  {item.flag && (
+                    <img src={FLAG_URL(item.flag)} alt="" className="w-4 h-3 rounded-sm inline-block" />
+                  )}
+                  {item.sub}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 };
