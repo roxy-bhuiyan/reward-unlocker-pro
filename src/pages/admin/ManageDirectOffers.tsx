@@ -11,8 +11,19 @@ const FLAG_URL = (code: string) =>
 const ManageDirectOffers = () => {
   const [offers, setOffers] = useState<DirectOffer[]>([]);
   const [editing, setEditing] = useState<DirectOffer | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { setOffers(getDirectOffers()); }, []);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !editing) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setEditing({ ...editing, image: reader.result as string });
+    };
+    reader.readAsDataURL(file);
+  };
 
   const save = (updated: DirectOffer[]) => {
     setOffers(updated);
