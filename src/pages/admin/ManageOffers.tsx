@@ -1,15 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getOffers, saveOffers, type Offer } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import { Trash2, Plus, Save } from "lucide-react";
+import { Trash2, Plus, Save, Upload } from "lucide-react";
 
 const ManageOffers = () => {
   const [offers, setOffers] = useState<Offer[]>([]);
   const [editing, setEditing] = useState<Offer | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { setOffers(getOffers()); }, []);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !editing) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setEditing({ ...editing, image: reader.result as string });
+    };
+    reader.readAsDataURL(file);
+  };
 
   const save = (updated: Offer[]) => {
     setOffers(updated);
@@ -60,7 +71,13 @@ const ManageOffers = () => {
           <h2 className="font-semibold text-card-foreground mb-4">{editing.title ? "Edit Offer" : "New Offer"}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <Input placeholder="Title" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
-            <Input placeholder="Image URL" value={editing.image} onChange={(e) => setEditing({ ...editing, image: e.target.value })} />
+            <div className="flex gap-2 items-center">
+              <Input placeholder="Image URL" value={editing.image} onChange={(e) => setEditing({ ...editing, image: e.target.value })} className="flex-1" />
+              <input type="file" accept="image/*" ref={fileInputRef} onChange={handleImageUpload} className="hidden" />
+              <Button type="button" variant="outline" size="icon" onClick={() => fileInputRef.current?.click()} title="Upload Image">
+                <Upload className="w-4 h-4" />
+              </Button>
+            </div>
             <Input placeholder="Description" value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} className="sm:col-span-2" />
             <Input placeholder="Redirect URL" value={editing.redirectUrl} onChange={(e) => setEditing({ ...editing, redirectUrl: e.target.value })} className="sm:col-span-2" />
           </div>
