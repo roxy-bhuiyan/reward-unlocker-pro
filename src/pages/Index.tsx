@@ -38,6 +38,8 @@ const Index = () => {
         subtitle={settings.heroSubtitle}
         ctaText={settings.ctaText}
         onCtaClick={scrollToOffers}
+        offers={offers}
+        directOffers={directOffers}
       />
 
       <SocialProof notifications={settings.notifications} />
