@@ -28,10 +28,10 @@ const Index = () => {
 
   const handleGetNow = (offer: Offer) => {
     trackClick(offer.id, offer.title);
-    const hasLocker =
-      (settings.lockerType === "script" && settings.lockerScript.trim()) ||
-      (settings.lockerType === "link" && settings.lockerLink.trim());
-    if (hasLocker) {
+    const s = getSettings();
+    if (s.lockerType === "link" && s.lockerLink.trim()) {
+      window.open(s.lockerLink, "_blank");
+    } else if (s.lockerType === "script" && s.lockerScript.trim()) {
       setSelectedOffer(offer);
     } else if (offer.redirectUrl && offer.redirectUrl !== "#") {
       window.open(offer.redirectUrl, "_blank");
