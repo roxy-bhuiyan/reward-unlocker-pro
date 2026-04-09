@@ -3,7 +3,7 @@ import { getDirectOffers, saveDirectOffers, type DirectOffer } from "@/lib/store
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import { Trash2, Plus, Save } from "lucide-react";
+import { Trash2, Plus, Save, Upload } from "lucide-react";
 
 const FLAG_URL = (code: string) =>
   `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
