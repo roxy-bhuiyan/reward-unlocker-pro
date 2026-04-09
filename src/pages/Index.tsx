@@ -28,7 +28,16 @@ const Index = () => {
 
   const handleGetNow = (offer: Offer) => {
     trackClick(offer.id, offer.title);
-    setSelectedOffer(offer);
+    const hasLocker =
+      (settings.lockerType === "script" && settings.lockerScript.trim()) ||
+      (settings.lockerType === "link" && settings.lockerLink.trim());
+    if (hasLocker) {
+      setSelectedOffer(offer);
+    } else if (offer.redirectUrl && offer.redirectUrl !== "#") {
+      window.open(offer.redirectUrl, "_blank");
+    } else {
+      setSelectedOffer(offer);
+    }
   };
 
   return (
