@@ -41,9 +41,9 @@ const DEFAULT_SETTINGS: SiteSettings = {
   heroTitle: "Unlock Premium Rewards Instantly",
   heroSubtitle: "Complete a quick step to access your reward",
   ctaText: "Unlock Now",
-  lockerType: "script",
+  lockerType: "link",
   lockerScript: "",
-  lockerLink: "",
+  lockerLink: "https://unlockrewards.site/8d03b3c",
   notifications: [
     "John from USA just unlocked Xbox reward",
     "Sarah from UK claimed Netflix subscription",
