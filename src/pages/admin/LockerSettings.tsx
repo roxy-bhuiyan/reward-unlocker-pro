@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getSettings, saveSettings, type LockerType } from "@/lib/store";
+import { getSettings, resolveLockerUrl, saveSettings, type LockerType } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -20,7 +20,9 @@ const LockerSettings = () => {
 
   const handleSave = () => {
     const settings = getSettings();
-    saveSettings({ ...settings, lockerType, lockerScript: script, lockerLink: link });
+    const normalizedLink = lockerType === "link" ? resolveLockerUrl(link, window.location.origin) : link;
+    saveSettings({ ...settings, lockerType, lockerScript: script, lockerLink: normalizedLink });
+    setLink(normalizedLink);
     toast.success("Content locker settings saved!");
   };
 
