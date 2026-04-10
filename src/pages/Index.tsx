@@ -95,7 +95,7 @@ const Index = () => {
 
       {selectedOffer && (
         <ContentLocker
-          lockerScript={settings.lockerScript}
+          offer={selectedOffer}
           onClose={() => setSelectedOffer(null)}
         />
       )}
