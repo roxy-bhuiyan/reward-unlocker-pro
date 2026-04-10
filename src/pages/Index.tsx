@@ -6,7 +6,7 @@ import DirectOfferCard from "@/components/landing/DirectOfferCard";
 import ProgressSteps from "@/components/landing/ProgressSteps";
 import SocialProof from "@/components/landing/SocialProof";
 import ContentLocker from "@/components/landing/ContentLocker";
-import { getOffers, getSettings, getDirectOffers, trackClick, type Offer, type DirectOffer } from "@/lib/store";
+import { getOffers, getSettings, getDirectOffers, resolveLockerUrl, trackClick, type Offer, type DirectOffer } from "@/lib/store";
 import { Settings } from "lucide-react";
 
 const Index = () => {
@@ -28,7 +28,7 @@ const Index = () => {
 
   const ensureAbsoluteUrl = (url: string) => {
     if (!/^https?:\/\//i.test(url)) {
-      return "https://" + url;
+      return "https://" + url.replace(/^\/+/, "");
     }
     return url;
   };
@@ -37,11 +37,11 @@ const Index = () => {
     trackClick(offer.id, offer.title);
     const s = getSettings();
     if (s.lockerType === "link" && s.lockerLink.trim()) {
-      window.open(ensureAbsoluteUrl(s.lockerLink.trim()), "_blank");
+      window.open(resolveLockerUrl(s.lockerLink, window.location.origin), "_blank", "noopener,noreferrer");
     } else if (s.lockerType === "script" && s.lockerScript.trim()) {
       setSelectedOffer(offer);
     } else if (offer.redirectUrl && offer.redirectUrl !== "#") {
-      window.open(ensureAbsoluteUrl(offer.redirectUrl), "_blank");
+      window.open(ensureAbsoluteUrl(offer.redirectUrl), "_blank", "noopener,noreferrer");
     } else {
       setSelectedOffer(offer);
     }

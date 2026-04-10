@@ -53,6 +53,33 @@ const DEFAULT_SETTINGS: SiteSettings = {
   ],
 };
 
+export const DEFAULT_LOCKER_ORIGIN = new URL(DEFAULT_SETTINGS.lockerLink).origin;
+
+export function normalizeLockerUrl(url: string): string {
+  const trimmedUrl = url.trim();
+
+  if (!trimmedUrl) return "";
+  if (/^https?:\/\//i.test(trimmedUrl)) return trimmedUrl;
+  if (trimmedUrl.startsWith("//")) return `https:${trimmedUrl}`;
+  if (trimmedUrl.startsWith("/")) return `${DEFAULT_LOCKER_ORIGIN}${trimmedUrl}`;
+  if (!trimmedUrl.includes(".")) return `${DEFAULT_LOCKER_ORIGIN}/${trimmedUrl.replace(/^\/+/, "")}`;
+
+  return `https://${trimmedUrl}`;
+}
+
+export function resolveLockerUrl(url: string, currentOrigin?: string): string {
+  const normalizedUrl = normalizeLockerUrl(url);
+
+  if (!normalizedUrl) return "";
+
+  const parsedUrl = new URL(normalizedUrl);
+  if (currentOrigin && parsedUrl.origin === currentOrigin) {
+    return `${DEFAULT_LOCKER_ORIGIN}${parsedUrl.pathname}${parsedUrl.search}${parsedUrl.hash}`;
+  }
+
+  return parsedUrl.toString();
+}
+
 export function getOffers(): Offer[] {
   const stored = localStorage.getItem("cpa_offers");
   return stored ? JSON.parse(stored) : DEFAULT_OFFERS;

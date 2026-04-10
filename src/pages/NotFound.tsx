@@ -1,10 +1,24 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { getSettings, resolveLockerUrl } from "@/lib/store";
 
 const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
+    const settings = getSettings();
+    const targetLockerUrl = settings.lockerType === "link" ? resolveLockerUrl(settings.lockerLink, window.location.origin) : "";
+
+    if (targetLockerUrl) {
+      const currentPath = location.pathname.replace(/\/+$/, "") || "/";
+      const lockerPath = new URL(targetLockerUrl).pathname.replace(/\/+$/, "") || "/";
+
+      if (!location.pathname.startsWith("/admin") && currentPath === lockerPath) {
+        window.location.replace(targetLockerUrl);
+        return;
+      }
+    }
+
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
   }, [location.pathname]);
 
