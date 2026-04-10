@@ -26,12 +26,6 @@ const Index = () => {
     offersRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const ensureAbsoluteUrl = (url: string) => {
-    if (!/^https?:\/\//i.test(url)) {
-      return "https://" + url.replace(/^\/+/, "");
-    }
-    return url;
-  };
 
   const handleGetNow = (offer: Offer) => {
     trackClick(offer.id, offer.title);
