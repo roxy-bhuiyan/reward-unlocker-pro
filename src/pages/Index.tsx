@@ -36,10 +36,10 @@ const Index = () => {
   const handleGetNow = (offer: Offer) => {
     trackClick(offer.id, offer.title);
     const s = getSettings();
-    if (s.lockerType === "link" && s.lockerLink.trim()) {
-      window.open(resolveLockerUrl(s.lockerLink, window.location.origin), "_blank", "noopener,noreferrer");
-    } else if (s.lockerType === "script" && s.lockerScript.trim()) {
+    if (s.lockerType === "script" && s.lockerScript.trim()) {
       setSelectedOffer(offer);
+    } else if (s.lockerType === "link" && s.lockerLink.trim()) {
+      window.open(ensureAbsoluteUrl(s.lockerLink), "_blank", "noopener,noreferrer");
     } else if (offer.redirectUrl && offer.redirectUrl !== "#") {
       window.open(ensureAbsoluteUrl(offer.redirectUrl), "_blank", "noopener,noreferrer");
     } else {
@@ -104,9 +104,7 @@ const Index = () => {
 
       {selectedOffer && (
         <ContentLocker
-          lockerType={settings.lockerType || "script"}
           lockerScript={settings.lockerScript}
-          lockerLink={settings.lockerLink || ""}
           onClose={() => setSelectedOffer(null)}
         />
       )}
