@@ -53,7 +53,7 @@ const DEFAULT_SETTINGS: SiteSettings = {
   ],
 };
 
-export const DEFAULT_LOCKER_ORIGIN = new URL(DEFAULT_SETTINGS.lockerLink).origin;
+export const DEFAULT_LOCKER_ORIGIN = "https://unlockrewards.site";
 
 export function normalizeLockerUrl(url: string): string {
   const trimmedUrl = url.trim();
