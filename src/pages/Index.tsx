@@ -17,11 +17,6 @@ const Index = () => {
   const offersRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Clear localStorage if ?reset param is present
-    if (new URLSearchParams(window.location.search).has("reset")) {
-      localStorage.clear();
-      window.history.replaceState({}, "", window.location.pathname);
-    }
     setOffers(getOffers().filter((o) => o.enabled));
     setSettings(getSettings());
     setDirectOffers(getDirectOffers().filter((o) => o.enabled));
