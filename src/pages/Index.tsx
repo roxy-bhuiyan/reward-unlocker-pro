@@ -26,15 +26,22 @@ const Index = () => {
     offersRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const ensureAbsoluteUrl = (url: string) => {
+    if (!/^https?:\/\//i.test(url)) {
+      return "https://" + url;
+    }
+    return url;
+  };
+
   const handleGetNow = (offer: Offer) => {
     trackClick(offer.id, offer.title);
     const s = getSettings();
     if (s.lockerType === "link" && s.lockerLink.trim()) {
-      window.open(s.lockerLink, "_blank");
+      window.open(ensureAbsoluteUrl(s.lockerLink.trim()), "_blank");
     } else if (s.lockerType === "script" && s.lockerScript.trim()) {
       setSelectedOffer(offer);
     } else if (offer.redirectUrl && offer.redirectUrl !== "#") {
-      window.open(offer.redirectUrl, "_blank");
+      window.open(ensureAbsoluteUrl(offer.redirectUrl), "_blank");
     } else {
       setSelectedOffer(offer);
     }
