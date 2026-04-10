@@ -6,7 +6,7 @@ import DirectOfferCard from "@/components/landing/DirectOfferCard";
 import ProgressSteps from "@/components/landing/ProgressSteps";
 import SocialProof from "@/components/landing/SocialProof";
 import ContentLocker from "@/components/landing/ContentLocker";
-import { getOffers, getSettings, getDirectOffers, resolveLockerUrl, trackClick, type Offer, type DirectOffer } from "@/lib/store";
+import { getOffers, getSettings, getDirectOffers, trackClick, type Offer, type DirectOffer } from "@/lib/store";
 import { Settings } from "lucide-react";
 
 const Index = () => {
