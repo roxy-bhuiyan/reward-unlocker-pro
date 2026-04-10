@@ -35,21 +35,7 @@ const Index = () => {
 
   const handleGetNow = (offer: Offer) => {
     trackClick(offer.id, offer.title);
-    const s = getSettings();
-    if (s.lockerType === "script" && s.lockerScript.trim()) {
-      setSelectedOffer(offer);
-    } else if (s.lockerType === "link" && s.lockerLink.trim()) {
-      const url = ensureAbsoluteUrl(s.lockerLink);
-      const newTab = window.open(url, "_blank", "noopener,noreferrer");
-      if (!newTab) {
-        // Fallback if popup blocked
-        window.location.href = url;
-      }
-    } else if (offer.redirectUrl && offer.redirectUrl !== "#") {
-      window.open(ensureAbsoluteUrl(offer.redirectUrl), "_blank", "noopener,noreferrer");
-    } else {
-      setSelectedOffer(offer);
-    }
+    setSelectedOffer(offer);
   };
 
   return (
